@@ -1,4 +1,5 @@
-import { MongoClient,ServerApiVersion } from "mongodb";
+// import { MongoClient,ServerApiVersion } from "mongodb";
+import mongoose from "mongoose";
 import dotenv from "dotenv";
 import path from "path";
 import {fileURLToPath} from "url";
@@ -12,16 +13,14 @@ dotenv.config({path:path.resolve(dirname,"../../../.env")});
 const uri = process.env.MONGO_URL;
 
 console.log("MongoDB URI:", uri);
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URL);
+    console.log("MongoDB connected");
+  } catch (error) {
+    console.error("DB connection failed:", error.message);
+    process.exit(1);
+  }
+};
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri,  {
-        serverApi: {
-            version: ServerApiVersion.v1,
-            strict: true,
-            deprecationErrors: true,
-        }
-    }
-);
-
-
-export default client;
+export default connectDB;
