@@ -10,10 +10,10 @@ console.log(generateShortCode());
 
 const getUrl=(prefix="")=>{
     if(prefix){
-        return `https://${prefix}.${generateShortCode()}`;
+        return `https://${prefix}.saksin.online/${generateShortCode()}`;
     }
     else{
-        return `https://short.${generateShortCode()}`;
+        return `https://short.saksin.online/${generateShortCode()}`;
     }
 }
 
