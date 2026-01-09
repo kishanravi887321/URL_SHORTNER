@@ -1,0 +1,16 @@
+{
+  "name": "URL Shortener",
+  "short_name": "URLShort",
+  "description": "Free URL shortener to create short links. Make your long URLs shorter, trackable, and shareable.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f1a",
+  "theme_color": "#6366f1",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

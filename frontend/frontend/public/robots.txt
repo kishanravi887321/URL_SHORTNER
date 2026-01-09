@@ -1,0 +1,9 @@
+# URL Shortener Robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://urlshortner.saksin.online/sitemap.xml
+
+# Disallow admin pages if any
+Disallow: /admin/
