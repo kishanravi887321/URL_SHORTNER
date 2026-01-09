@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { FiLink, FiCopy, FiCheck, FiExternalLink } from 'react-icons/fi';
+import { FiLink, FiCopy, FiCheck, FiExternalLink, FiArrowRight, FiRefreshCw, FiCheckCircle } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { createShortUrl, isValidUrl } from '../services/urlService';
 
 const UrlShortenerForm = () => {
   const [originalUrl, setOriginalUrl] = useState('');
   const [shortUrl, setShortUrl] = useState('');
-  const [shortCode, setShortCode] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -34,7 +33,6 @@ const UrlShortenerForm = () => {
     try {
       const result = await createShortUrl(urlToShorten);
       setShortUrl(result.shortUrl);
-      setShortCode(result.shortCode);
       toast.success('URL shortened successfully!');
     } catch (error) {
       toast.error(error.message);
@@ -57,7 +55,6 @@ const UrlShortenerForm = () => {
   const handleReset = () => {
     setOriginalUrl('');
     setShortUrl('');
-    setShortCode('');
     setCopied(false);
   };
 
@@ -68,70 +65,100 @@ const UrlShortenerForm = () => {
           <FiLink className="input-icon" />
           <input
             type="text"
-            placeholder="Enter your long URL here..."
+            placeholder="Paste your long URL here..."
             value={originalUrl}
             onChange={(e) => setOriginalUrl(e.target.value)}
-            disabled={isLoading}
+            disabled={isLoading || shortUrl}
             aria-label="URL to shorten"
           />
-          <button 
-            type="submit" 
-            className="btn btn-primary"
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <span className="loading-spinner"></span>
-            ) : (
-              'Shorten'
-            )}
-          </button>
+          {!shortUrl && (
+            <button 
+              type="submit" 
+              className="btn btn-primary"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <span className="loading-spinner"></span>
+              ) : (
+                <>
+                  Shorten
+                  <FiArrowRight className="btn-icon" />
+                </>
+              )}
+            </button>
+          )}
         </div>
       </form>
 
       {shortUrl && (
         <div className="result-container">
-          <div className="result-box">
-            <div className="result-header">
-              <span className="result-label">Your shortened URL:</span>
-              <button 
-                className="btn btn-secondary btn-sm"
-                onClick={handleReset}
-              >
-                Shorten Another
-              </button>
+          <div className="result-card">
+            <div className="result-success-badge">
+              <FiCheckCircle />
+              <span>Link Created Successfully!</span>
             </div>
             
-            <div className="result-url-group">
-              <a 
-                href={shortUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="short-url"
-              >
-                {shortUrl}
-                <FiExternalLink className="external-icon" />
-              </a>
+            <div className="result-main">
+              <div className="result-url-wrapper">
+                <span className="result-label">Your Short Link</span>
+                <div className="result-url-box">
+                  <a 
+                    href={shortUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="short-url"
+                  >
+                    {shortUrl}
+                  </a>
+                  <button 
+                    className={`btn-icon-copy ${copied ? 'copied' : ''}`}
+                    onClick={handleCopy}
+                    aria-label="Copy to clipboard"
+                  >
+                    {copied ? <FiCheck /> : <FiCopy />}
+                  </button>
+                </div>
+              </div>
               
               <button 
-                className={`btn btn-copy ${copied ? 'copied' : ''}`}
+                className={`btn btn-copy-main ${copied ? 'copied' : ''}`}
                 onClick={handleCopy}
-                aria-label="Copy to clipboard"
               >
-                {copied ? <FiCheck /> : <FiCopy />}
-                {copied ? 'Copied!' : 'Copy'}
+                {copied ? (
+                  <>
+                    <FiCheck />
+                    Copied!
+                  </>
+                ) : (
+                  <>
+                    <FiCopy />
+                    Copy Link
+                  </>
+                )}
               </button>
             </div>
-            
-            <div className="result-info">
-              <span className="info-item">
-                <strong>Short Code:</strong> {shortCode}
-              </span>
-              <span className="info-item">
-                <strong>Original:</strong> 
-                <a href={originalUrl} target="_blank" rel="noopener noreferrer" className="original-url-link">
-                  {originalUrl.length > 50 ? originalUrl.substring(0, 50) + '...' : originalUrl}
+
+            <div className="result-footer">
+              <div className="original-url-display">
+                <span className="original-label">Original URL:</span>
+                <a 
+                  href={originalUrl.startsWith('http') ? originalUrl : `https://${originalUrl}`} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="original-url-link"
+                >
+                  {originalUrl.length > 60 ? originalUrl.substring(0, 60) + '...' : originalUrl}
+                  <FiExternalLink />
                 </a>
-              </span>
+              </div>
+              
+              <button 
+                className="btn btn-new-link"
+                onClick={handleReset}
+              >
+                <FiRefreshCw />
+                Shorten Another
+              </button>
             </div>
           </div>
         </div>
