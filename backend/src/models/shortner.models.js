@@ -2,7 +2,7 @@ import mongoose    from "mongoose";
 
 const ShortSchema = new mongoose.Schema({
   originalUrl: {
-    type: URL,}
+    type: String,}
     ,
     shortUrl: {
     type: String,
