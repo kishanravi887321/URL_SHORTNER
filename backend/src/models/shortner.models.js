@@ -4,10 +4,14 @@ const ShortSchema = new mongoose.Schema({
   originalUrl: {
     type: String,}
     ,
-    shortUrl: {
+    shortCode: {
     type: String,
     required: true,
     unique: true,
+    },
+    shortUrl:{
+        type:String,
+        required:false,
     },
     createdAt: {default: Date.now, type: Date},
     expireAt: {type: Date, default: null},

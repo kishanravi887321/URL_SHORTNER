@@ -4,11 +4,14 @@ import makeShortCode from "../utils/convertToshort.utils.js";
 export const createShortUrl = async (req, res) => {
   try {
     const { originalUrl, prefix } = req.body;
+    console.log("Received original URL:", originalUrl);
     const [shortUrl, shortCode] = getUrl(prefix ?? "");
-
+    
+    console.log("Generated short URL:", shortUrl);
     const newShort = new Short({
       originalUrl,
       shortCode,
+        shortUrl,
     }); 
     await newShort.save();
     res.status(201).json({ shortUrl, shortCode });
