@@ -6,4 +6,16 @@ const generateShortCode = (length = 8) => {
 
 console.log(generateShortCode());
 
-export { generateShortCode };
+
+
+const getUrl=(prefix="")=>{
+    if(prefix){
+        return `https://${prefix}.${generateShortCode()}`;
+    }
+    else{
+        return `https://short.${generateShortCode()}`;
+    }
+}
+
+console.log(getUrl("customprefix"));
+console.log(getUrl());
