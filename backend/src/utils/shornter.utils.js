@@ -17,5 +17,5 @@ const getUrl=(prefix="")=>{
         return [`https://short.saksin.online/${temp}`, temp];
     }
 }
-
+console.log(getUrl());
 export default getUrl;
