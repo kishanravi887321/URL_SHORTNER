@@ -9,13 +9,13 @@ console.log(generateShortCode());
 
 
 const getUrl=(prefix="")=>{
+    let temp=generateShortCode();
     if(prefix){
-        return `https://${prefix}.saksin.online/${generateShortCode()}`;
+        return [`https://${prefix}.saksin.online/${temp}`, temp];
     }
     else{
-        return `https://short.saksin.online/${generateShortCode()}`;
+        return [`https://short.saksin.online/${temp}`, temp];
     }
 }
 
-console.log(getUrl("customprefix"));
-console.log(getUrl());
+export default getUrl;
