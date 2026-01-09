@@ -1,6 +1,6 @@
 import getUrl from "../utils/shornter.utils.js";
 import Short from "../models/shortner.models.js";
-
+import makeShortCode from "../utils/convertToshort.utils.js";
 export const createShortUrl = async (req, res) => {
   try {
     const { originalUrl, prefix } = req.body;
@@ -21,6 +21,7 @@ export const createShortUrl = async (req, res) => {
 export const getOriginalUrl = async (req, res) => {
   try {
     const { shortUrl } = req.params;
+    const shortCode = makeShortCode(shortUrl);
     const shortEntry = await Short.findOne({ shortCode });
 
     if (!shortEntry) {
