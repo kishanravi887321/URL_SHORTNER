@@ -1,7 +1,12 @@
 import { MongoClient,ServerApiVersion } from "mongodb";
 import dotenv from "dotenv";
+import path from "path";
+import {fileURLToPath} from "url";
 
-dotenv.config({path:"../../../.env"});
+const filename= fileURLToPath(import.meta.url);
+const dirname= path.dirname(filename);
+
+dotenv.config({path:path.resolve(dirname,"../../../.env")});
 
 // Replace the placeholder with your Atlas connection string
 const uri = process.env.MONGO_URL;

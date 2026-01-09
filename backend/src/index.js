@@ -3,6 +3,7 @@ import app from "./app.js";
 import client from "./db/main.db.js";
 
 dotenv.config({path:"../../.env"});
+// import "./db/main.db.js";
 
 const port = process.env.PORT || 3000;
 
