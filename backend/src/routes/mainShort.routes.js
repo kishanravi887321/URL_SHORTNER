@@ -5,6 +5,6 @@ import express from "express";
 const router = express.Router();
 
 router.post("/shorten", createShortUrl);
-router.get("/:shortUrl", getOriginalUrl);
+// router.get("/:shortUrl", getOriginalUrl);
 
 export { router };

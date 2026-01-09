@@ -23,14 +23,15 @@ export const createShortUrl = async (req, res) => {
 
 export const getOriginalUrl = async (req, res) => {
   try {
-    const { shortUrl } = req.params;
-    const shortCode = makeShortCode(shortUrl);
+    const { shortCode } = req.params;
+    console.log("Received short code:", shortCode);
+    // const shortCode = makeShortCode(short);
     const shortEntry = await Short.findOne({ shortCode });
 
     if (!shortEntry) {
       return res.status(404).json({ message: "Short URL not found" });
     }
-    res.status(200).json({ originalUrl: shortEntry.originalUrl });
+     return res.redirect(302, shortEntry.originalUrl);
   } catch (error) {
     console.error("Error retrieving original URL:", error);
     res.status(500).json({ message: "Internal server error" });
